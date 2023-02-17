@@ -7,6 +7,7 @@ export const HomeScreen = () => {
   return (
     <FlatList
       data={restaurants}
+      style={{ padding: 10 }}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => {
