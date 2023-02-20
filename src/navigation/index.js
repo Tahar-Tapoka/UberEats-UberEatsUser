@@ -4,34 +4,46 @@ import { DishDetailScreen } from "../screens/DishDetailsScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { RestaurantDetails } from "../screens/RestaurantDetailsScreen";
 import { OrdersScreen } from "../screens/OrdersScreen";
-import { Icon } from "react-native-vector-icons/Icon";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Cart } from "../screens/Cart";
+import { OrderDetailsScreen } from "../screens/OrderDetailsScreen";
 
 const TAB_ICON = {
-  Home: "md-restaurant",
-  Orders: "md-cart",
-  Profile: "md-settings",
+  Home: "home",
+  Orders: "cart",
+  Profile: "account",
 };
 
 const createScreenOptions = ({ route }) => {
   const iconName = TAB_ICON[route.name];
   return {
     tabBarIcon: ({ size, color }) => (
-      <Icon name={iconName} size={size} color={color} />
+      <MaterialCommunityIcons name={iconName} size={24} color={color} />
     ),
-    tabBarActiveTintColor: "black",
-    tabBarInactiveTintColor: "grey",
     headerShown: false,
   };
 };
-const Stack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 
 export const HomeNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ header: () => {} }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Restaurant" component={RestaurantDetails} />
-      <Stack.Screen name="Dish" component={DishDetailScreen} />
-    </Stack.Navigator>
+    <HomeStack.Navigator screenOptions={{ header: () => {} }}>
+      <HomeStack.Screen name="Restaurants" component={HomeScreen} />
+      <HomeStack.Screen name="Restaurant" component={RestaurantDetails} />
+      <HomeStack.Screen name="Dish" component={DishDetailScreen} />
+      <HomeStack.Screen name="Cart" component={Cart} />
+    </HomeStack.Navigator>
+  );
+};
+const OrdersStack = createNativeStackNavigator();
+
+export const OrdersNavigator = () => {
+  return (
+    <OrdersStack.Navigator screenOptions={{ header: () => {} }}>
+      <OrdersStack.Screen name="OrdersScreen" component={OrdersScreen} />
+      <OrdersStack.Screen name="Order" component={OrderDetailsScreen} />
+    </OrdersStack.Navigator>
   );
 };
 
@@ -39,9 +51,9 @@ const Tab = createMaterialBottomTabNavigator();
 
 export const HomeTabs = () => {
   return (
-    <Tab.Navigator screenOptions={createScreenOptions}>
-      <Tab.Screen name="HomeScreen" component={HomeNavigator} />
-      <Tab.Screen name="Orders" component={OrdersScreen} />
+    <Tab.Navigator screenOptions={createScreenOptions} activeColor="tomato">
+      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Orders" component={OrdersNavigator} />
       <Tab.Screen name="Profile" component={HomeScreen} />
     </Tab.Navigator>
   );

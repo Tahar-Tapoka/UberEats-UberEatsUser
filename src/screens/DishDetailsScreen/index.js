@@ -41,7 +41,7 @@ export const DishDetailScreen = ({ route, navigation }) => {
         style={{ padding: 15, marginTop: "auto" }}
         icon="cart-plus"
         mode="contained"
-        onPress={() => console.log("Added to cart")}
+        onPress={() => navigation.navigate("Cart", { dish })}
         buttonColor="black"
       >
         <Text style={styles.summ}>

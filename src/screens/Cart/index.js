@@ -1,8 +1,11 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Divider, IconButton } from "react-native-paper";
 import { CartDishItem } from "../../components/CartDishItem";
+import restaurants from "../../../assets/restaurants.json";
 
-export const Cart = ({ restaurant, dish }) => {
+export const Cart = ({ navigation, route }) => {
+  const { dish } = route.params;
+  const restaurant = restaurants[0];
   return (
     <View style={styles.container}>
       <IconButton
@@ -30,7 +33,7 @@ export const Cart = ({ restaurant, dish }) => {
         style={{ padding: 15, marginTop: "auto" }}
         icon="cash-check"
         mode="contained"
-        onPress={() => console.log("proceed to pay")}
+        onPress={() => navigation.navigate("Orders")}
         buttonColor="black"
       >
         Next &#8226; {dish.price * 4} $

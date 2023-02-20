@@ -10,7 +10,7 @@ import { Divider } from "react-native-paper";
 import orders from "../../../assets/orders.json";
 import { OrdersItem } from "../../components/OrderListItem";
 
-export const OrdersScreen = () => {
+export const OrdersScreen = ({ navigation }) => {
   return (
     <>
       <Text style={styles.title}>Your Orders</Text>
@@ -18,7 +18,7 @@ export const OrdersScreen = () => {
         data={orders}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => console.log("navigation.Navigate", item.id)}
+            onPress={() => navigation.navigate("Order", { order: item })}
           >
             <OrdersItem order={item} />
           </TouchableOpacity>

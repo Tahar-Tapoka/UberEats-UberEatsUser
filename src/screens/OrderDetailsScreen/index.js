@@ -1,8 +1,11 @@
 import { FlatList, View } from "react-native";
 import { CartDishItem } from "../../components/CartDishItem";
 import { OrderHeader } from "../OrdersScreen/OrderHeader";
+import restaurants from "../../../assets/restaurants.json";
 
-export const OrderDetailsScreen = ({ order, restaurant }) => {
+export const OrderDetailsScreen = ({ route }) => {
+  const restaurant = restaurants[1];
+  const { order } = route.params;
   return (
     <View style={{ flex: 1 }}>
       <OrderHeader order={order} />
