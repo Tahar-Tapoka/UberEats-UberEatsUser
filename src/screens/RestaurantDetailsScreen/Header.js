@@ -1,17 +1,10 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import { Avatar, Divider, IconButton, MD3Colors } from "react-native-paper";
+import { Avatar, Divider } from "react-native-paper";
 
 export const Header = ({ restaurant }) => {
   return (
     <>
       <Image source={{ uri: restaurant.image }} style={styles.image} />
-      <IconButton
-        icon="arrow-left-bold-circle"
-        iconColor={MD3Colors.primary10}
-        size={40}
-        onPress={() => console.log("Back")}
-        style={styles.backIcon}
-      />
       <View style={{ padding: 10 }}>
         <Text style={styles.name}>{restaurant.name}</Text>
         <View style={styles.rating}>
@@ -31,13 +24,8 @@ export const Header = ({ restaurant }) => {
 
 const styles = StyleSheet.create({
   image: {
-    height: "30%",
+    height: "20%",
     width: "100%",
-  },
-  backIcon: {
-    position: "absolute",
-    marginTop: 10,
-    marginLeft: 10,
   },
   rating: {
     padding: 5,
@@ -51,6 +39,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: "grey",
+    marginVertical: 10,
+    letterSpacing: 0.7,
   },
   title: {
     fontSize: 16,

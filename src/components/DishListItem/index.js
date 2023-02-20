@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { Divider } from "react-native-paper";
 
 export const MenuItem = ({ dishe }) => {
-  console.log(dishe);
   return (
     <>
       <View style={styles.container}>
