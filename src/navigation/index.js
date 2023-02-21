@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Cart } from "../screens/Cart";
 import { OrderDetailsScreen } from "../screens/OrderDetailsScreen";
+import { Profile } from "../screens/Profile";
 
 const TAB_ICON = {
   Home: "home",
@@ -54,7 +55,7 @@ export const HomeTabs = () => {
     <Tab.Navigator screenOptions={createScreenOptions} activeColor="tomato">
       <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Orders" component={OrdersNavigator} />
-      <Tab.Screen name="Profile" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };

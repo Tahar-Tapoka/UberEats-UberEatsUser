@@ -1,19 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { StatusBar as RNStatusBar } from "react-native";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import restaurants from "./assets/restaurants.json";
-import orders from "./assets/orders.json";
-import { Cart } from "./src/screens/Cart";
-import { DishDetailScreen } from "./src/screens/DishDetailsScreen";
+import { StyleSheet, View } from "react-native";
+import { Amplify } from "aws-amplify";
+import awsconfig from "./src/aws-exports";
 
-import { HomeScreen } from "./src/screens/HomeScreen";
-import { OrderDetailsScreen } from "./src/screens/OrderDetailsScreen";
-import { OrdersScreen } from "./src/screens/OrdersScreen";
-import { RestaurantDetails } from "./src/screens/RestaurantDetailsScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { HomeTabs, RootNavigator } from "./src/navigation";
+import { HomeTabs } from "./src/navigation";
+import { withAuthenticator } from "@aws-amplify/ui-react-native";
 
-export default function App() {
+Amplify.configure(awsconfig);
+
+function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
@@ -36,3 +33,5 @@ const styles = StyleSheet.create({
     marginTop: RNStatusBar.currentHeight,
   },
 });
+
+export default withAuthenticator(App);
