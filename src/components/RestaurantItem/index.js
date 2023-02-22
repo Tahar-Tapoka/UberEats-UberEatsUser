@@ -10,12 +10,12 @@ export const RestaurantItem = ({ restaurant }) => {
           <View>
             <Text style={styles.name}>{restaurant.name}</Text>
             <Text style={styles.price}>
-              {restaurant.deliveryFee}$ &#8226; {restaurant.minDeliveryTime}-
-              {restaurant.maxDeliveryTime}min
+              {restaurant.deliveryFee.toFixed(1)}$ &#8226;{" "}
+              {restaurant.minDeliveryTime}-{restaurant.maxDeliveryTime}min
             </Text>
           </View>
           <View style={styles.rating}>
-            <Text>{restaurant.rating}</Text>
+            <Text>{restaurant.rating.toFixed(1)}</Text>
           </View>
         </View>
       </Card.Content>

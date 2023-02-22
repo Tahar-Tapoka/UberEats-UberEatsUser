@@ -14,12 +14,6 @@ function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {/* <HomeScreen /> */}
-        {/* <RestaurantDetails restaurant={restaurants[0]} /> */}
-        {/* <DishDetailScreen dish={restaurants[0].dishes[0]} /> */}
-        {/* <Cart dish={restaurants[0].dishes[0]} restaurant={restaurants[0]} /> */}
-        {/* <OrdersScreen /> */}
-        {/* <OrderDetailsScreen order={orders[1]} restaurant={restaurants[1]} /> */}
         <HomeTabs />
         <StatusBar style="auto" />
       </View>

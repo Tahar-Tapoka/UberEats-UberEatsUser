@@ -8,7 +8,7 @@ export const Header = ({ restaurant }) => {
       <View style={{ padding: 10 }}>
         <Text style={styles.name}>{restaurant.name}</Text>
         <View style={styles.rating}>
-          <Text>{restaurant.rating}</Text>
+          <Text>{restaurant.rating.toFixed(1)} </Text>
           <Avatar.Icon
             size={24}
             icon="star"

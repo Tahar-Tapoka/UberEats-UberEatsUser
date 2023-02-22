@@ -1,16 +1,26 @@
+import { DataStore } from "aws-amplify";
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 import { MenuItem } from "../../components/DishListItem";
+import { Dish } from "../../models";
 import { Header } from "./Header";
 
 export const RestaurantDetails = ({ route, navigation }) => {
+  const [dishes, setDishes] = useState([]);
   const { restaurant } = route.params;
+
+  useEffect(() => {
+    DataStore.query(Dish, (dish) => dish.restaurantID.eq(restaurant.id)).then(
+      setDishes
+    );
+  }, []);
   return (
     <>
       <Header restaurant={restaurant} />
       <FlatList
         // ListHeaderComponent={() => <Header restaurant={restaurant} />}
-        data={restaurant.dishes}
+        data={dishes}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("Dish", { dish: item })}
