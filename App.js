@@ -5,8 +5,10 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { HomeTabs } from "./src/navigation";
+import { RootNavigator } from "./src/navigation";
 import { withAuthenticator } from "@aws-amplify/ui-react-native";
+import { AuthContextProvider } from "./src/contexts/AuthContext";
+import { CartContextProvider } from "./src/contexts/CartContext";
 
 Amplify.configure(awsconfig);
 
@@ -14,7 +16,11 @@ function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <HomeTabs />
+        <AuthContextProvider>
+          <CartContextProvider>
+            <RootNavigator />
+          </CartContextProvider>
+        </AuthContextProvider>
         <StatusBar style="auto" />
       </View>
     </NavigationContainer>

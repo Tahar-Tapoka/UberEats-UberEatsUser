@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Button, Divider, IconButton } from "react-native-paper";
+import { useCartContext } from "../../contexts/CartContext";
 
 export const DishDetailScreen = ({ route, navigation }) => {
   const [increment, setIncrement] = useState(0);
   const { dish } = route.params;
+  const { addDishToCart } = useCartContext();
+
+  const addToCartHandler = () => {
+    addDishToCart(dish, increment);
+    // navigation.navigate("Cart", { dish });
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <IconButton
@@ -41,21 +50,13 @@ export const DishDetailScreen = ({ route, navigation }) => {
         style={{ padding: 15, marginTop: "auto" }}
         icon="cart-plus"
         mode="contained"
-        onPress={() => navigation.navigate("Cart", { dish })}
+        onPress={addToCartHandler}
         buttonColor="black"
       >
         <Text style={styles.summ}>
           Add {increment} to Cart &#8226; {(dish.price * increment).toFixed(2)}$
         </Text>
       </Button>
-      {/* <TouchableOpacity
-        style={styles.touchButton}
-        disabled={increment === 0}
-        onPress={() => console.log("Added to cart")}
-      >
-        <Text style={styles.buttonText}>Add {increment} to Cart</Text>
-        <Text style={styles.summ}>{(dish.price * increment).toFixed(2)}$</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };

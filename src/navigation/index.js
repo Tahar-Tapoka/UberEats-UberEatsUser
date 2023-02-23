@@ -9,6 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Cart } from "../screens/Cart";
 import { OrderDetailsScreen } from "../screens/OrderDetailsScreen";
 import { Profile } from "../screens/Profile";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const TAB_ICON = {
   Home: "home",
@@ -25,8 +26,8 @@ const createScreenOptions = ({ route }) => {
     headerShown: false,
   };
 };
-const HomeStack = createNativeStackNavigator();
 
+const HomeStack = createNativeStackNavigator();
 export const HomeNavigator = () => {
   return (
     <HomeStack.Navigator screenOptions={{ header: () => {} }}>
@@ -37,8 +38,8 @@ export const HomeNavigator = () => {
     </HomeStack.Navigator>
   );
 };
-const OrdersStack = createNativeStackNavigator();
 
+const OrdersStack = createNativeStackNavigator();
 export const OrdersNavigator = () => {
   return (
     <OrdersStack.Navigator screenOptions={{ header: () => {} }}>
@@ -49,7 +50,6 @@ export const OrdersNavigator = () => {
 };
 
 const Tab = createMaterialBottomTabNavigator();
-
 export const HomeTabs = () => {
   return (
     <Tab.Navigator screenOptions={createScreenOptions} activeColor="tomato">
@@ -57,5 +57,19 @@ export const HomeTabs = () => {
       <Tab.Screen name="Orders" component={OrdersNavigator} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
+  );
+};
+
+const RootStack = createNativeStackNavigator();
+export const RootNavigator = () => {
+  const { dbUser } = useAuthContext();
+  return (
+    <RootStack.Navigator screenOptions={{ header: () => {} }}>
+      {dbUser ? (
+        <RootStack.Screen name="HomeTabs" component={HomeTabs} />
+      ) : (
+        <RootStack.Screen name="Profile" component={Profile} />
+      )}
+    </RootStack.Navigator>
   );
 };

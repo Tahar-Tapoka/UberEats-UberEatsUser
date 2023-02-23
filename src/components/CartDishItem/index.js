@@ -1,17 +1,21 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export const CartDishItem = ({ cartDish }) => (
-  <View style={styles.row}>
-    <View style={styles.quantityContainer}>
-      <Text>10</Text>
+export const CartDishItem = ({ cartDish }) => {
+  return (
+    <View style={styles.row}>
+      <View style={styles.quantityContainer}>
+        <Text>{cartDish.quantity}</Text>
+      </View>
+      <Text style={{ ...styles.title, fontSize: 18 }}>
+        {" "}
+        &#8226; {cartDish.Dish._z?.name}
+      </Text>
+      <Text style={styles.price}>
+        {(cartDish.Dish._z?.price * cartDish.quantity).toFixed(2)} $
+      </Text>
     </View>
-    <Text style={{ ...styles.title, fontSize: 18 }}>
-      {" "}
-      &#8226; {cartDish.name}
-    </Text>
-    <Text style={styles.price}>{cartDish.price} $</Text>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   quantityContainer: {

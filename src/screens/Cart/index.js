@@ -2,32 +2,33 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Divider, IconButton } from "react-native-paper";
 import { CartDishItem } from "../../components/CartDishItem";
 import restaurants from "../../../assets/restaurants.json";
+import { useCartContext } from "../../contexts/CartContext";
 
 export const Cart = ({ navigation, route }) => {
-  const { dish } = route.params;
-  const restaurant = restaurants[0];
+  const { cartDishes, restaurant, totalPrice } = useCartContext();
+
   return (
     <View style={styles.container}>
       <IconButton
         icon="arrow-left"
         size={30}
-        onPress={() => console.log("navigation.goBack()")}
+        onPress={() => navigation.goBack()}
         style={styles.backIcon}
       />
       <Text style={styles.title}>{restaurant.name}</Text>
       <Text style={{ ...styles.title, fontSize: 16 }}>Your Items</Text>
       <FlatList
-        data={restaurant.dishes}
+        data={cartDishes}
         renderItem={({ item }) => <CartDishItem cartDish={item} />}
       />
       <Divider />
       <View style={styles.row}>
         <Text style={styles.subtitle}>Subtotal</Text>
-        <Text style={styles.price}>{dish.price * 2} $</Text>
+        <Text style={styles.price}>{9.99 * 2} $</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.subtitle}>Total</Text>
-        <Text style={styles.price}>{dish.price * 4} $</Text>
+        <Text style={styles.price}>{totalPrice} $</Text>
       </View>
       <Button
         style={{ padding: 15, marginTop: "auto" }}
@@ -36,7 +37,7 @@ export const Cart = ({ navigation, route }) => {
         onPress={() => navigation.navigate("Orders")}
         buttonColor="black"
       >
-        Next &#8226; {dish.price * 4} $
+        Create Order &#8226; {totalPrice} $
       </Button>
     </View>
   );

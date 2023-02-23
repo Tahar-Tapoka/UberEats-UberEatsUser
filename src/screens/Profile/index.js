@@ -1,18 +1,62 @@
 import { useAuthenticator } from "@aws-amplify/ui-react-native";
-import { StyleSheet, View, Text, TextInput, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Keyboard,
+  Alert,
+} from "react-native";
 import { Button, Divider } from "react-native-paper";
 import { useState } from "react";
+import { DataStore } from "aws-amplify";
+import { User } from "../../models";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const Profile = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [lat, setLat] = useState("0");
-  const [lng, setLng] = useState("0");
+  const { sub, setDbUser, dbUser } = useAuthContext();
+  const [name, setName] = useState(dbUser?.name || "");
+  const [address, setAddress] = useState(dbUser?.address || "");
+  const [lat, setLat] = useState(dbUser?.lat.toString() || "0");
+  const [lng, setLng] = useState(dbUser?.lng.toString() || "0");
   const { signOut } = useAuthenticator();
 
-  const onSave = () => {
-    console.log("saved : ", name, address, lat, lng);
-    navigation.navigate("Home");
+  const onSave = async () => {
+    if (!dbUser) {
+      ////create user
+      try {
+        DataStore.save(
+          new User({
+            name,
+            address,
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            sub,
+          })
+        ).then(setDbUser);
+      } catch (e) {
+        Alert.alert("Error: ", e.message);
+      }
+    } else {
+      ////update user
+      try {
+        const original = await DataStore.query(User, dbUser.id);
+        const user = await DataStore.save(
+          User.copyOf(original, (updated) => {
+            updated.name = name;
+            updated.address = address;
+            updated.lat = parseFloat(lat);
+            updated.lng = parseFloat(lng);
+          })
+        );
+
+        setDbUser(user);
+        console.log(user);
+      } catch (e) {
+        Alert.alert("Error: ", e.message);
+      }
+    }
+    navigation.goBack();
     Keyboard.dismiss();
   };
 
@@ -46,10 +90,10 @@ export const Profile = ({ navigation }) => {
         keyboardType="numeric"
       />
       <Button mode="contained" onPress={onSave}>
-        Save
+        {!dbUser ? "Save" : "Update"}
       </Button>
       <Divider />
-      <Button mode="contained" onPress={signOut} title="Sign Out">
+      <Button mode="contained" onPress={signOut}>
         Sign Out
       </Button>
     </View>
