@@ -1,11 +1,12 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Divider, IconButton } from "react-native-paper";
 import { CartDishItem } from "../../components/CartDishItem";
-import restaurants from "../../../assets/restaurants.json";
 import { useCartContext } from "../../contexts/CartContext";
+import { useOrderContext } from "../../contexts/OrderContext";
 
 export const Cart = ({ navigation, route }) => {
   const { cartDishes, restaurant, totalPrice } = useCartContext();
+  const { createOrder } = useOrderContext();
 
   return (
     <View style={styles.container}>
@@ -34,7 +35,10 @@ export const Cart = ({ navigation, route }) => {
         style={{ padding: 15, marginTop: "auto" }}
         icon="cash-check"
         mode="contained"
-        onPress={() => navigation.navigate("Orders")}
+        onPress={() => {
+          createOrder();
+          navigation.navigate("Orders");
+        }}
         buttonColor="black"
       >
         Create Order &#8226; {totalPrice} $

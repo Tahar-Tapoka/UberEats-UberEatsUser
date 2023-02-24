@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Cart, CartDish, Dish, Restaurant } from "../models";
 import { useAuthContext } from "./AuthContext";
 
-const CartContext = createContext();
+const CartContext = createContext({});
 
 export const CartContextProvider = ({ children }) => {
   const [restaurant, setRestaurant] = useState();

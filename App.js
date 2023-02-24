@@ -9,6 +9,7 @@ import { RootNavigator } from "./src/navigation";
 import { withAuthenticator } from "@aws-amplify/ui-react-native";
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 import { CartContextProvider } from "./src/contexts/CartContext";
+import { OrderContextProvider } from "./src/contexts/OrderContext";
 
 Amplify.configure(awsconfig);
 
@@ -18,7 +19,9 @@ function App() {
       <View style={styles.container}>
         <AuthContextProvider>
           <CartContextProvider>
-            <RootNavigator />
+            <OrderContextProvider>
+              <RootNavigator />
+            </OrderContextProvider>
           </CartContextProvider>
         </AuthContextProvider>
         <StatusBar style="auto" />

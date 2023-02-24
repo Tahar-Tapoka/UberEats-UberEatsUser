@@ -7,10 +7,11 @@ import {
   View,
 } from "react-native";
 import { Divider } from "react-native-paper";
-import orders from "../../../assets/orders.json";
 import { OrdersItem } from "../../components/OrderListItem";
+import { useOrderContext } from "../../contexts/OrderContext";
 
 export const OrdersScreen = ({ navigation }) => {
+  const { orders } = useOrderContext();
   return (
     <>
       <Text style={styles.title}>Your Orders</Text>
