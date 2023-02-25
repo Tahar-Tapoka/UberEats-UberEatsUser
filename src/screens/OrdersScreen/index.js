@@ -19,7 +19,7 @@ export const OrdersScreen = ({ navigation }) => {
         data={orders}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Order", { order: item })}
+            onPress={() => navigation.navigate("Order", { orderId: item.id })}
           >
             <OrdersItem order={item} />
           </TouchableOpacity>

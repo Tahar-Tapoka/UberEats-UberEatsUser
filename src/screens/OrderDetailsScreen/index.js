@@ -2,17 +2,27 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { CartDishItem } from "../../components/CartDishItem";
 import { OrderHeader } from "../OrdersScreen/OrderHeader";
 import restaurants from "../../../assets/restaurants.json";
-import { IconButton } from "react-native-paper";
+import { ActivityIndicator, IconButton } from "react-native-paper";
+import { useOrderContext } from "../../contexts/OrderContext";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const OrderDetailsScreen = ({ route, navigation }) => {
-  const restaurant = restaurants[1];
-  const { order } = route.params;
+  // const restaurant = restaurants[1];
+  const { orderId } = route.params;
+  const [order, setOrder] = useState();
+  const [orderDishItem, setOrderDishItem] = useState();
+  const { getOrders } = useOrderContext();
+  useEffect(() => {
+    getOrders(orderId).then(setOrder);
+  }, []);
+  if (!order) return <ActivityIndicator color="blue" size={40} />;
   return (
     <View style={{ flex: 1 }}>
       <OrderHeader order={order} />
       <FlatList
         style={{ marginLeft: 10 }}
-        data={restaurant.dishes}
+        data={order.dishes}
         renderItem={({ item }) => <CartDishItem cartDish={item} />}
         keyExtractor={(item) => item.description}
       />

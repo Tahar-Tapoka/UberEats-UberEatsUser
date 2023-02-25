@@ -35,8 +35,8 @@ export const Cart = ({ navigation, route }) => {
         style={{ padding: 15, marginTop: "auto" }}
         icon="cash-check"
         mode="contained"
-        onPress={() => {
-          createOrder();
+        onPress={async () => {
+          await createOrder();
           navigation.navigate("Orders");
         }}
         buttonColor="black"

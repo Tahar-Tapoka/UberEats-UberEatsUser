@@ -1,6 +1,6 @@
 import { DataStore } from "aws-amplify";
 import { createContext, useContext, useEffect, useState } from "react";
-import { Order, OrderDish } from "../models";
+import { Dish, Order, OrderDish } from "../models";
 import { useAuthContext } from "./AuthContext";
 import { useCartContext } from "./CartContext";
 
@@ -36,13 +36,20 @@ export const OrderContextProvider = ({ children }) => {
         )
       )
     );
-    //clea cart
+    //clear cart
     await DataStore.delete(cart);
     setOrders([...orders, newOrder]);
   };
 
+  const getOrder = async (id) => {
+    const order = await DataStore.query(Order, id);
+    const orderDishes = await DataStore.query(OrderDish, (od) =>
+      od.orderID.eq(id)
+    );
+    return { ...order, dishes: orderDishes };
+  };
   return (
-    <OrderContext.Provider value={{ createOrder, orders }}>
+    <OrderContext.Provider value={{ createOrder, orders, getOrder }}>
       {children}
     </OrderContext.Provider>
   );
